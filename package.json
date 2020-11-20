@@ -1,0 +1,16 @@
+{
+  "name": "blog.softwaretester.spriteanimator",
+  "version": "1.0.0",
+  "displayName": "Sprite Animator",
+  "description": "Component for simple sprite animations.",
+  "keywords": [
+    "sprite",
+    "animation",
+    "simple"
+  ],
+  "author": {
+    "name": "Benjamin Bischoff",
+    "url": "https://www.softwaretester.blog"
+  },
+  "type": "library"
+}
