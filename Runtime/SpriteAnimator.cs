@@ -249,7 +249,7 @@ namespace blog.softwaretester.spriteanimator
             }
 
             // Return first sprite group if none is set.
-            if (groupId == "")
+            if (groupId == null || groupId == "")
             {
                 return spriteGroup[0];
             }
