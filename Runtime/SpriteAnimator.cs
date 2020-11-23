@@ -243,6 +243,17 @@ namespace blog.softwaretester.spriteanimator
 
         private SpriteGroup GetAnimationSpriteByGroupId(string groupId)
         {
+            if (spriteGroup.Count == 0)
+            {
+                throw new Exception("You need at least one sprite group to use SpriteAnimator.");
+            }
+
+            // Return first sprite group if none is set.
+            if (groupId == "")
+            {
+                return spriteGroup[0];
+            }
+
             foreach (SpriteGroup animationSprite in spriteGroup)
             {
                 if (animationSprite.groupId == groupId)
