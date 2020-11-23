@@ -96,10 +96,16 @@ namespace blog.softwaretester.spriteanimator
             Play(groupId, mode, delay, 0, -1);
         }
 
+        public void SetActiveSpriteGroup(string groupId)
+        {
+            if (groupId == null && activeSpriteGroup == null) activeSpriteGroup = spriteGroup[0];
+            else activeSpriteGroup = GetAnimationSpriteGroupByGroupId(groupId);
+        }
+
         public void Play(string groupId, AnimationMode mode, float delay, int startSpriteIndex, int endSpriteIndex)
         {
             animationDelay = delay;
-            activeSpriteGroup = GetAnimationSpriteByGroupId(groupId);
+            SetActiveSpriteGroup(groupId);
 
             switch (mode)
             {
@@ -238,20 +244,14 @@ namespace blog.softwaretester.spriteanimator
 
         public int GetSpriteCountInGroup(string groupId)
         {
-            return GetAnimationSpriteByGroupId(groupId).sprites.Count;
+            return GetAnimationSpriteGroupByGroupId(groupId).sprites.Count;
         }
 
-        private SpriteGroup GetAnimationSpriteByGroupId(string groupId)
+        private SpriteGroup GetAnimationSpriteGroupByGroupId(string groupId)
         {
             if (spriteGroup.Count == 0)
             {
                 throw new Exception("You need at least one sprite group to use SpriteAnimator.");
-            }
-
-            // Return first sprite group if none is set.
-            if (groupId == null || groupId == "")
-            {
-                return spriteGroup[0];
             }
 
             foreach (SpriteGroup animationSprite in spriteGroup)
