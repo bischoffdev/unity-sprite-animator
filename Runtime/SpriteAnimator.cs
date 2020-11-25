@@ -299,6 +299,11 @@ namespace blog.softwaretester.spriteanimator
 
         private SpriteGroup GetSpriteGroupByGroupId(string groupId)
         {
+            if (spriteGroups.Count == 0)
+            {
+                throw new Exception("No sprite groups exist. Please specify at least one!");
+            }
+
             foreach (SpriteGroup spriteGroup in spriteGroups)
             {
                 if (spriteGroup.groupId == groupId)
