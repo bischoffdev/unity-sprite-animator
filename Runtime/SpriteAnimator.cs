@@ -306,7 +306,7 @@ namespace blog.softwaretester.spriteanimator
                     return spriteGroup;
                 }
             }
-            throw new Exception("No sprite group with id '" + groupId + "' exists. Please choose one of " + GetSpriteGroupIds());
+            throw new Exception("No sprite group with id '" + groupId + "' exists. Please choose one of " + string.Join(", ", GetSpriteGroupIds()));
         }
 
         private List<string> GetSpriteGroupIds()
