@@ -1,4 +1,6 @@
-# Sprite Animator
+![logo](Documentation/logo.png)
+
+# Sprite Animator for Unity
 
 ![GitHub](https://img.shields.io/github/license/laxersaz/unity-sprite-animator)
 
