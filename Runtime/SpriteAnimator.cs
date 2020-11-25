@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 namespace blog.softwaretester.spriteanimator
 {
     public class SpriteAnimator : MonoBehaviour
     {
+        /// <summary>
+		/// Attach a function to OnTrigger in order to react to animation triggers that are defined in the UI.
+		/// <code>OnTrigger += MyCustomTriggerHandler;</code>
+		/// </summary>
         public event Action<int, string> OnTrigger;
-
+        
         [Serializable]
         private struct Trigger
         {
@@ -34,6 +39,9 @@ namespace blog.softwaretester.spriteanimator
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>")]
         private Image targetImage;
 
+        /// <summary>
+		/// The different animation modes to use. If none is specified, ONCE is used by default.
+		/// </summary>
         public enum AnimationMode
         {
             ONCE,
@@ -55,52 +63,88 @@ namespace blog.softwaretester.spriteanimator
         private int startIndex;
         private int endIndex;
 
+        /// <summary>
+		/// This returns the Image element that this SpriteAnimator is attached to.
+		/// </summary>
         public Image Image => targetImage;
 
+        /// <summary>
+		/// Sets the active sprite group to play animations in.
+		/// </summary>
+		/// <param name="groupId">The group ID to switch to.</param>
+        public void SetSpriteGroup(groupId)
+        {
+            activeSpriteGroup = GetSpriteGroupByGroupId(groupId);
+        }
+
+        /// <summary>
+		/// Switches to and stops at the sprite with the specified index.
+		/// </summary>
+		/// <param name="spriteIndex">The index of the sprite in the current group.</param>
         public void GotoAndStop(int spriteIndex)
         {
-            GotoAndStop(activeSpriteGroup.groupId, spriteIndex, 0);
+            GotoAndStop(spriteIndex, 0);
         }
 
-        public void GotoAndStop(string groupId, int spriteIndex)
+        /// <summary>
+		/// Switches to and stops at the sprite with the specified index after a delay.
+		/// </summary>
+		/// <param name="spriteIndex">The index of the sprite in the current group.</param>
+		/// <param name="delay">A delay in seconds to wait before the switch.</param>
+        public void GotoAndStop(int spriteIndex, float delay)
         {
-            GotoAndStop(groupId, spriteIndex, 0);
+            Play(AnimationMode.ONCE, delay, spriteIndex, spriteIndex);
         }
 
-        public void GotoAndStop(string groupId, int spriteIndex, float delay)
-        {
-            Play(groupId, AnimationMode.ONCE, delay, spriteIndex, spriteIndex);
-        }
-
+        /// <summary>
+		/// Plays from the sprite with the specified index.
+		/// </summary>
+		/// <param name="spriteIndex">The index of the sprite in the current group.</param>
         public void GotoAndPlay(int spriteIndex)
         {
-            GotoAndPlay(activeSpriteGroup.groupId, spriteIndex, 0);
+            GotoAndPlay(spriteIndex, 0);
+
         }
 
-        public void GotoAndPlay(string groupId, int spriteIndex)
+        /// <summary>
+		/// Plays from the sprite with the specified index after a delay.
+		/// </summary>
+		/// <param name="spriteIndex">The index of the sprite in the current group.</param>
+		/// <param name="delay">A delay in seconds to wait before the switch.</param>
+        public void GotoAndPlay(int spriteIndex, float delay)
         {
-            GotoAndPlay(groupId, spriteIndex, 0);
+            Play(AnimationMode.ONCE, delay, spriteIndex, -1);
         }
 
-        public void GotoAndPlay(string groupId, int spriteIndex, float delay)
+        /// <summary>
+		/// Plays from the sprite with the specified index using a specified animation mode.
+		/// </summary>
+		/// <param name="mode">The animation mode to use.</param>
+        public void Play(AnimationMode mode)
         {
-            Play(groupId, AnimationMode.ONCE, delay, spriteIndex, -1);
+            Play(mode, 0);
         }
 
-        public void Play(string groupId, AnimationMode mode)
+        /// <summary>
+		/// Plays from the sprite with the specified index using a specified animation mode after a delay.
+		/// </summary>
+		/// <param name="mode">The animation mode to use.</param>
+		/// <param name="delay">A delay in seconds to wait before the switch.</param>
+        public void Play(AnimationMode mode, float delay)
         {
-            Play(groupId, mode, 0);
+            Play(mode, delay, 0, -1);
         }
 
-        public void Play(string groupId, AnimationMode mode, float delay)
-        {
-            Play(groupId, mode, delay, 0, -1);
-        }
-
-        public void Play(string groupId, AnimationMode mode, float delay, int startSpriteIndex, int endSpriteIndex)
+        /// <summary>
+		/// Plays a section of sprites using a specified animation mode after a delay.
+		/// </summary>
+		/// <param name="mode">The animation mode to use.</param>
+		/// <param name="delay">A delay in seconds to wait before the switch.</param>
+		/// <param name="startSpriteIndex">The starting point (sprite index) of the section to play.</param>
+		/// <param name="endSpriteIndex">The end point (sprite index) of the section to play.</param>
+        public void Play(AnimationMode mode, float delay, int startSpriteIndex, int endSpriteIndex)
         {
             animationDelay = delay;
-            activeSpriteGroup = GetAnimationSpriteGroupByGroupId(groupId);
 
             switch (mode)
             {
@@ -142,14 +186,30 @@ namespace blog.softwaretester.spriteanimator
             isPlaying = true;
         }
 
+        /// <summary>
+		/// Pause the current animation.
+		/// </summary>
         public void Pause()
         {
             isPlaying = false;
         }
 
+        /// <summary>
+		/// Resume the current animation after a pause.
+		/// </summary>
         public void Resume()
         {
             isPlaying = true;
+        }
+
+        /// <summary>
+        /// Return the number of sprites in a certain group.
+        /// </summary>
+        /// <param name="groupId">The group ID.</param>
+        /// <returns></returns>
+        public int GetSpriteCountInGroup(string groupId)
+        {
+            return GetAnimationSpriteGroupByGroupId(groupId).sprites.Count;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
@@ -237,25 +297,21 @@ namespace blog.softwaretester.spriteanimator
             }
         }
 
-        public int GetSpriteCountInGroup(string groupId)
+        private SpriteGroup GetSpriteGroupByGroupId(string groupId)
         {
-            return GetAnimationSpriteGroupByGroupId(groupId).sprites.Count;
-        }
-
-        private SpriteGroup GetAnimationSpriteGroupByGroupId(string groupId)
-        {
-            foreach (SpriteGroup animationSprite in spriteGroups)
+            foreach (SpriteGroup spriteGroup in spriteGroups)
             {
-                if (animationSprite.groupId == groupId)
+                if (spriteGroup.groupId == groupId)
                 {
-                    if (animationSprite.sprites.Count == 0)
-                    {
-                        throw new Exception("No sprites in group: " + groupId);
-                    }
-                    return animationSprite;
+                    return spriteGroup;
                 }
             }
-            throw new Exception("No sprite group: " + groupId);
+            throw new Exception("No sprite group with id '" + groupId + "' exists. Please choose one of " + GetSpriteGroupIds());
+        }
+
+        private List<string> GetSpriteGroupIds()
+        {
+            return (from SpriteGroup spriteGroup in spriteGroups select spriteGroup.groupId).ToList();
         }
 
         private string GetDebuggerDisplay()
