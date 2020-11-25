@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +28,7 @@ namespace blog.softwaretester.spriteanimator
 
         [SerializeField]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>")]
-        private List<SpriteGroup> spriteGroup;
+        private List<SpriteGroup> spriteGroups;
 
         [SerializeField]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>")]
@@ -99,7 +100,7 @@ namespace blog.softwaretester.spriteanimator
         public void Play(string groupId, AnimationMode mode, float delay, int startSpriteIndex, int endSpriteIndex)
         {
             animationDelay = delay;
-            activeSpriteGroup = GetAnimationSpriteByGroupId(groupId);
+            activeSpriteGroup = GetAnimationSpriteGroupByGroupId(groupId);
 
             switch (mode)
             {
@@ -238,12 +239,12 @@ namespace blog.softwaretester.spriteanimator
 
         public int GetSpriteCountInGroup(string groupId)
         {
-            return GetAnimationSpriteByGroupId(groupId).sprites.Count;
+            return GetAnimationSpriteGroupByGroupId(groupId).sprites.Count;
         }
 
-        private SpriteGroup GetAnimationSpriteByGroupId(string groupId)
+        private SpriteGroup GetAnimationSpriteGroupByGroupId(string groupId)
         {
-            foreach (SpriteGroup animationSprite in spriteGroup)
+            foreach (SpriteGroup animationSprite in spriteGroups)
             {
                 if (animationSprite.groupId == groupId)
                 {
@@ -255,6 +256,11 @@ namespace blog.softwaretester.spriteanimator
                 }
             }
             throw new Exception("No sprite group: " + groupId);
+        }
+
+        private string GetDebuggerDisplay()
+        {
+            return ToString();
         }
     }
 }
