@@ -72,7 +72,7 @@ namespace blog.softwaretester.spriteanimator
 		/// Sets the active sprite group to play animations in.
 		/// </summary>
 		/// <param name="groupId">The group ID to switch to.</param>
-        public void SetSpriteGroup(groupId)
+        public void SetSpriteGroup(string groupId)
         {
             activeSpriteGroup = GetSpriteGroupByGroupId(groupId);
         }
@@ -164,11 +164,11 @@ namespace blog.softwaretester.spriteanimator
 
             if (startSpriteIndex < 0 || startSpriteIndex > activeSpriteGroup.sprites.Count - 1)
             {
-                throw new Exception("Invalid start sprite index " + startSpriteIndex + " for group " + groupId + ".");
+                throw new Exception("Invalid start sprite index " + startSpriteIndex + " for group " + activeSpriteGroup.groupId + ".");
             }
             if (endSpriteIndex < 0 || endSpriteIndex > activeSpriteGroup.sprites.Count - 1 || endSpriteIndex < startSpriteIndex)
             {
-                throw new Exception("Invalid end sprite index " + endSpriteIndex + " for group " + groupId + ".");
+                throw new Exception("Invalid end sprite index " + endSpriteIndex + " for group " + activeSpriteGroup.groupId + ".");
             }
 
             startIndex = startSpriteIndex;
@@ -209,7 +209,7 @@ namespace blog.softwaretester.spriteanimator
         /// <returns></returns>
         public int GetSpriteCountInGroup(string groupId)
         {
-            return GetAnimationSpriteGroupByGroupId(groupId).sprites.Count;
+            return GetSpriteGroupByGroupId(groupId).sprites.Count;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
