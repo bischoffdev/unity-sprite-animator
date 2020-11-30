@@ -179,11 +179,6 @@ namespace blog.softwaretester.spriteanimator
             passedTime = 0;
             secondsPerSprite = activeSpriteGroup.spritesPerSecond > 0 ? 1f / activeSpriteGroup.spritesPerSecond : 1f / 25f;
 
-            print("-----");
-            print("activeSpriteGroup: " + activeSpriteGroup.groupId + " - " + activeSpriteGroup.spritesPerSecond);
-            print("Seconds per sprite: " + secondsPerSprite * 1000);
-            print("-----");
-
             targetImage.sprite = activeSpriteGroup.sprites[activeSpriteIndex];
             CheckTriggers();
 
