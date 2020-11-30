@@ -2,13 +2,13 @@
 
 
 
-![logo](Documentation/logo.png)
+![logo](Documentation~/logo.png)
 
 ![GitHub](https://img.shields.io/github/license/laxersaz/unity-sprite-animator)
 
 An easy way to animate sprites within image components - especially for use in UIs.
 
-Please check the [Changelog](CHANGELOG.md) for changes. 
+Please check the [Changelog](CHANGELOG.md) for changes.
 
 # Installation
 
@@ -18,25 +18,25 @@ The easiest way to install Sprite Animator is through Unity's Package Manager.
 
 1. Choose "Add package from git URL..."
 
-   ![package_manager1](Documentation/package_manager1.png)
+   ![package_manager1](Documentation~/package_manager1.png)
 
 2. Enter `https://github.com/laxersaz/unity-sprite-animator.git` and click "Add"
 
-   ![package_manager2](Documentation/package_manager2.png)
+   ![package_manager2](Documentation~/package_manager2.png)
 
 3. After installation, you should see this:
 
-   ![package_manager3](Documentation/package_manager3.png)
+   ![package_manager3](Documentation~/package_manager3.png)
 
 ## Installing the sample
 
-If you want to see a working example that uses the Sprite Animator, you can also add the sample that comes bundled in the package. 
+If you want to see a working example that uses the Sprite Animator, you can also add the sample that comes bundled in the package.
 
 1. From the Unity Package Manager, select the Sprite Animator package, click on the arrow next to "Samples" and click on "Import"
 
-   ![install_sample](Documentation/install_sample.png)
+   ![install_sample](Documentation~/install_sample.png)
 
-2. After the import, you can find the "SpriteAnimatorExamples" scene in 
+2. After the import, you can find the "SpriteAnimatorExamples" scene in
 
    ```
    Assets
@@ -48,11 +48,11 @@ If you want to see a working example that uses the Sprite Animator, you can also
                        |-- Scenes
    ```
 
-   ![sample_scene](Documentation/sample_scene.png)
+   ![sample_scene](Documentation~/sample_scene.png)
 
 3. Open the scene and press play to see a working example that showcases the different animation modes and features.
 
-   ![running_sample](Documentation/running_sample.png)
+   ![running_sample](Documentation~/running_sample.png)
 
 ## Usage
 
