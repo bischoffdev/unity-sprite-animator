@@ -178,7 +178,7 @@ namespace blog.softwaretester.spriteanimator
             animationMode = mode;
 
             passedTime = 0;
-            secondsPerSprite = activeSpriteGroup.spritesPerSecond > 0 ? 1 / activeSpriteGroup.spritesPerSecond : 1 / 25f;
+            secondsPerSprite = activeSpriteGroup.spritesPerSecond > 0 ? 1f / activeSpriteGroup.spritesPerSecond : 1f / 25;
 
             targetImage.sprite = activeSpriteGroup.sprites[activeSpriteIndex];
             CheckTriggers();

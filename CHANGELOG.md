@@ -6,4 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.0] - 2020-11-20
 
-Initial version
+### Added
+* Initial version
+
+## [1.0.1] - 2020-11-30
+
+### Fixed
+* Wrong time calculation for sprites per second
