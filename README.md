@@ -1,5 +1,5 @@
 # Sprite Animator for Unity
-## Animate Sprites for lively game UIs
+## Animate Sprites for lively game UIs in Unity 3D Projects
 
 ![logo](Documentation~/logo.png)
 
