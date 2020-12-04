@@ -1,10 +1,11 @@
 # Sprite Animator for Unity
+## Animate Sprites for lively game UIs
 
 ![logo](Documentation~/logo.png)
 
 ![GitHub](https://img.shields.io/github/license/laxersaz/unity-sprite-animator)
 
-An easy way to animate sprites within image components - especially for use in UIs.
+An easy way to animate sprites within image components - especially for use in UIs. It supports various animation methods as well as triggers that can be used to react to specific frames in the animation.
 
 Please check the [Changelog](CHANGELOG.md) for changes.
 
