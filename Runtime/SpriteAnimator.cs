@@ -251,7 +251,7 @@ namespace blog.softwaretester.spriteanimator
 
         private void Animate()
         {
-            passedTime += Time.unscaledDeltaTime;
+            passedTime += Time.unscaledTime;
             if (animationDelay > 0)
             {
                 if (passedTime >= animationDelay)
