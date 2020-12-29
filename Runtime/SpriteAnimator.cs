@@ -38,11 +38,16 @@ namespace blog.softwaretester.spriteanimator
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>")]
         private Image targetImage;
 
+        [SerializeField]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "<Pending>")]
+        private AnimationMode autoPlay = AnimationMode.NONE;
+
         /// <summary>
         /// The different animation modes to use. If none is specified, ONCE is used by default.
         /// </summary>
         public enum AnimationMode
         {
+            NONE,
             ONCE,
             ONCE_REVERSE,
             PING_PONG,
@@ -66,6 +71,18 @@ namespace blog.softwaretester.spriteanimator
         /// This returns the Image element that this SpriteAnimator is attached to.
         /// </summary>
         public Image Image => targetImage;
+
+        /// <summary>
+        /// Sets the sprite group to the first one in the list and autoplays if applicable.
+        /// </summary>
+        private void Start()
+        {
+            activeSpriteGroup = spriteGroups[0];
+            if (autoPlay != AnimationMode.NONE)
+            {
+                Play(autoPlay);
+            }
+        }
 
         /// <summary>
         /// Sets the active sprite group to play animations in.
@@ -234,12 +251,12 @@ namespace blog.softwaretester.spriteanimator
 
         private void Animate()
         {
-            passedTime += Time.deltaTime;
+            passedTime += Time.unscaledDeltaTime;
             if (animationDelay > 0)
             {
                 if (passedTime >= animationDelay)
                 {
-                    animationDelay = 0;
+                    passedTime -= animationDelay;
                 }
                 else
                 {
