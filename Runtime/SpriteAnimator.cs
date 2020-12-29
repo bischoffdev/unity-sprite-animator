@@ -59,6 +59,7 @@ namespace blog.softwaretester.spriteanimator
         private bool isFirstStart;
         private SpriteGroup activeSpriteGroup;
         private int activeSpriteIndex;
+        private bool isAnimationFinished;
         private bool isPlaying;
         private bool isReverse;
         private AnimationMode animationMode;
@@ -162,6 +163,8 @@ namespace blog.softwaretester.spriteanimator
         /// <param name="endSpriteIndex">The end point (sprite index) of the section to play.</param>
         public void Play(AnimationMode mode, float delay, int startSpriteIndex, int endSpriteIndex)
         {
+            if (mode == AnimationMode.NONE) return;
+            isAnimationFinished = false;
             animationDelay = delay;
 
             switch (mode)
@@ -233,7 +236,7 @@ namespace blog.softwaretester.spriteanimator
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
         private void Update()
         {
-            if (isPlaying)
+            if (isPlaying && !isAnimationFinished)
             {
                 targetImage.sprite = activeSpriteGroup.sprites[activeSpriteIndex];
                 Animate();
@@ -281,6 +284,7 @@ namespace blog.softwaretester.spriteanimator
                         {
                             case AnimationMode.ONCE_REVERSE:
                             case AnimationMode.PING_PONG:
+                                isAnimationFinished = true;
                                 isPlaying = false;
                                 return;
                             case AnimationMode.PING_PONG_LOOP:
@@ -301,6 +305,7 @@ namespace blog.softwaretester.spriteanimator
                         switch (animationMode)
                         {
                             case AnimationMode.ONCE:
+                                isAnimationFinished = true;
                                 isPlaying = false;
                                 return;
                             case AnimationMode.PING_PONG:
