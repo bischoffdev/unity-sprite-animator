@@ -56,6 +56,7 @@ namespace blog.softwaretester.spriteanimator
             LOOP_REVERSE
         }
 
+        private bool isFirstStart;
         private SpriteGroup activeSpriteGroup;
         private int activeSpriteIndex;
         private bool isPlaying;
@@ -77,6 +78,7 @@ namespace blog.softwaretester.spriteanimator
         /// </summary>
         private void Start()
         {
+            isFirstStart = true;
             activeSpriteGroup = spriteGroups[0];
             if (autoPlay != AnimationMode.NONE)
             {
@@ -251,7 +253,9 @@ namespace blog.softwaretester.spriteanimator
 
         private void Animate()
         {
-            passedTime += Time.unscaledTime;
+            passedTime += isFirstStart ? 0 : Time.unscaledDeltaTime;
+            isFirstStart = false;
+
             if (animationDelay > 0)
             {
                 if (passedTime >= animationDelay)
