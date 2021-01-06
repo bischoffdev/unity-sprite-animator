@@ -1,12 +1,13 @@
 {
   "name": "blog.softwaretester.spriteanimator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "displayName": "Sprite Animator",
   "description": "Component for simple UI sprite animations.",
   "keywords": [
-    "sprite",
+    "sprites",
     "animation",
-    "simple"
+    "simple",
+    "ui"
   ],
   "author": {
     "name": "Benjamin Bischoff",

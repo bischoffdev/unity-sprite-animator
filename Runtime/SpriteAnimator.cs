@@ -56,7 +56,6 @@ namespace blog.softwaretester.spriteanimator
             LOOP_REVERSE
         }
 
-        private bool isFirstStart;
         private SpriteGroup activeSpriteGroup;
         private int activeSpriteIndex;
         private bool isAnimationFinished;
@@ -75,11 +74,47 @@ namespace blog.softwaretester.spriteanimator
         public Image Image => targetImage;
 
         /// <summary>
+        /// This returns the currently active sprite group id.
+        /// </summary>
+        /// <returns>The active sprite group id.</returns>
+        public string GetActiveSpriteGroupId()
+        {
+            return activeSpriteGroup.groupId;
+        }
+
+        /// <summary>
+        /// Returns the currently active sprite index.
+        /// </summary>
+        /// <returns>The active sprite index.</returns>
+        public int GetActiveSpriteIndex()
+        {
+            return activeSpriteIndex;
+        }
+
+        /// <summary>
+        /// Return the number of sprites in a certain group.
+        /// </summary>
+        /// <param name="groupId">The group ID.</param>
+        /// <returns>The total sprite count in the requested group.</returns>
+        public int GetSpriteCountInSpriteGroup(string groupId)
+        {
+            return GetSpriteGroupByGroupId(groupId).sprites.Count;
+        }
+
+        /// <summary>
+        /// Return the number of sprites in the active group.
+        /// </summary>
+        /// <returns>The total sprite count in the active group.</returns>
+        public int GetSpriteCountInActiveSpriteGroup()
+        {
+            return activeSpriteGroup.sprites.Count;
+        }
+
+        /// <summary>
         /// Sets the sprite group to the first one in the list and autoplays if applicable.
         /// </summary>
         private void Start()
         {
-            isFirstStart = true;
             activeSpriteGroup = spriteGroups[0];
             if (autoPlay != AnimationMode.NONE)
             {
@@ -160,8 +195,21 @@ namespace blog.softwaretester.spriteanimator
         /// <param name="mode">The animation mode to use.</param>
         /// <param name="delay">A delay in seconds to wait before the switch.</param>
         /// <param name="startSpriteIndex">The starting point (sprite index) of the section to play.</param>
-        /// <param name="endSpriteIndex">The end point (sprite index) of the section to play.</param>
+        /// <param name="endSpriteIndex">The end point (sprite index) of the section to play (-1 means until the end).</param>
         public void Play(AnimationMode mode, float delay, int startSpriteIndex, int endSpriteIndex)
+        {
+            Play(mode, delay, startSpriteIndex, endSpriteIndex, 0);
+        }
+
+        /// <summary>
+        /// Plays a section of sprites using a specified animation mode after a delay.
+        /// </summary>
+        /// <param name="mode">The animation mode to use.</param>
+        /// <param name="delay">A delay in seconds to wait before the switch.</param>
+        /// <param name="startSpriteIndex">The starting point (sprite index) of the section to play.</param>
+        /// <param name="endSpriteIndex">The end point (sprite index) of the section to play (-1 means until the end).</param>
+        /// <param name="overrideSpritesPerSeconds">Temporarily overrides the sprite group's sprites per second setting.</param>
+        public void Play(AnimationMode mode, float delay, int startSpriteIndex, int endSpriteIndex, float overrideSpritesPerSeconds)
         {
             if (mode == AnimationMode.NONE) return;
             isAnimationFinished = false;
@@ -199,13 +247,21 @@ namespace blog.softwaretester.spriteanimator
             animationMode = mode;
 
             passedTime = 0;
-            secondsPerSprite = activeSpriteGroup.spritesPerSecond > 0 ? 1f / activeSpriteGroup.spritesPerSecond : 1f / 25f;
+            if (overrideSpritesPerSeconds > 0)
+            {
+                secondsPerSprite = 1f / overrideSpritesPerSeconds;
+            }
+            else
+            {
+                secondsPerSprite = activeSpriteGroup.spritesPerSecond > 0 ? 1f / activeSpriteGroup.spritesPerSecond : 1f / 25f;
+            }
 
             targetImage.sprite = activeSpriteGroup.sprites[activeSpriteIndex];
             CheckTriggers();
 
             isPlaying = true;
         }
+
 
         /// <summary>
         /// Pause the current animation.
@@ -221,16 +277,6 @@ namespace blog.softwaretester.spriteanimator
         public void Resume()
         {
             isPlaying = true;
-        }
-
-        /// <summary>
-        /// Return the number of sprites in a certain group.
-        /// </summary>
-        /// <param name="groupId">The group ID.</param>
-        /// <returns></returns>
-        public int GetSpriteCountInGroup(string groupId)
-        {
-            return GetSpriteGroupByGroupId(groupId).sprites.Count;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
@@ -256,8 +302,7 @@ namespace blog.softwaretester.spriteanimator
 
         private void Animate()
         {
-            passedTime += isFirstStart ? 0 : Time.unscaledDeltaTime;
-            isFirstStart = false;
+            passedTime += Time.unscaledDeltaTime;
 
             if (animationDelay > 0)
             {
@@ -274,6 +319,10 @@ namespace blog.softwaretester.spriteanimator
             if (passedTime >= secondsPerSprite)
             {
                 passedTime -= secondsPerSprite;
+                if (passedTime >= secondsPerSprite)
+                {
+                    passedTime = 0;
+                }
 
                 if (isReverse)
                 {

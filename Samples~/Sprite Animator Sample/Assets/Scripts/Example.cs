@@ -43,6 +43,7 @@ public class Example : MonoBehaviour
         {
             case Buttons.ButtonAction.RESET:
                 spriteAnimator.Play(animationMode);
+                isPaused = false;
                 break;
             case Buttons.ButtonAction.PAUSE:
                 isPaused = !isPaused;
@@ -59,8 +60,8 @@ public class Example : MonoBehaviour
                 currentGroup = currentGroup == SpriteGroup.cube ? SpriteGroup.thing : SpriteGroup.cube;
                 spriteAnimator.SetSpriteGroup(currentGroup.ToString());
                 spriteAnimator.Play(animationMode);
-                isPaused = false;
                 triggerLabel.text = "";
+                isPaused = false;
                 break;
         }
     }
