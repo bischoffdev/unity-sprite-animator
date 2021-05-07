@@ -3,7 +3,7 @@
 
 ![logo](Documentation~/logo.png)
 
-![GitHub](https://img.shields.io/github/license/laxersaz/unity-sprite-animator)
+![GitHub](https://img.shields.io/github/license/bischoffdev/unity-sprite-animator)
 
 An easy way to animate sprites within image components - especially for use in UIs. It supports various animation methods as well as triggers that can be used to react to specific frames in the animation.
 
@@ -19,7 +19,7 @@ The easiest way to install Sprite Animator is through Unity's Package Manager.
 
    ![package_manager1](Documentation~/package_manager1.png)
 
-2. Enter `https://github.com/laxersaz/unity-sprite-animator.git` and click "Add"
+2. Enter `https://github.com/bischoffdev/unity-sprite-animator.git` and click "Add"
 
    ![package_manager2](Documentation~/package_manager2.png)
 
