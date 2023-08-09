@@ -1,3 +1,5 @@
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/benjamin-bischoff/)
+
 # Sprite Animator for Unity
 ## Animate Sprites for lively game UIs in Unity 3D Projects
 
